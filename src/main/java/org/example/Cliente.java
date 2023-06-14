@@ -1,14 +1,13 @@
 package org.example;
 
-
 import java.util.Objects;
 
 /**
  * Cliente do banco tendo os seguintes requisitos:
- *
+ * 
  * - Ao cadastrar um cliente, deve ser criada ao menos uma conta.
  * - Não deve-se excluir um cliente se este tiver contas cadastradas.
- *
+ * 
  * @author Manoel Campos da Silva Filho
  */
 public class Cliente implements Cadastro {
@@ -17,15 +16,15 @@ public class Cliente implements Cadastro {
 
     /**
      * CPF que é uma das formas de permitir representar o cliente unicamente.
-     *
+     * 
      * <ul>
-     *      <li>Não pode ser vazio nem nulo, não pode ter todos os dígitos iguais,
+     *      <li>Não pode ser vazio nem nulo, não pode ter todos os dígitos iguais, 
      *      não pode conter hífens e traços (R01).</li>
      *      <li>
      *          Ao setar o CPF, deve-se utilizar o método {@link #isCpfValido(String)}
      *          para verificar se o CPF é válido ou não. Se for inválido, o valor não deve
      *          ser armazenado e deve-se lançar uma exceção com a mensagem "CPF inválido".
-     *
+     * 
      *          (R02)
      *      </li>
      * <ul>
@@ -36,23 +35,23 @@ public class Cliente implements Cadastro {
      * Nome do cliente.
      * <ul>
      *      <li>
-     *          É obrigatório, não podendo ser nulo, vazio nem uma String
+     *          É obrigatório, não podendo ser nulo, vazio nem uma String 
      *          contendo apenas espaços.
-     *          Pode-se fazer nome = nome.trim() para remover quaisquer espaços
+     *          Pode-se fazer nome = nome.trim() para remover quaisquer espaços 
      *          vazios no início e fim
      *          da String. Após isto, pode-se verificar se a String é vazia.
      *          Se o nome for inválido, deve-se lançar uma exceção informando o erro.
-     *
+     * 
      *          (R03)
      *      </li>
      *      <li>
-     *
+     *      
      *          Deve conter pelo menos um sobrenome. Para isto, depois da
      *          verificação anterior, basta checar se há ao menos um espaço
-     *          no nome, usando o método contains() da classe String.
+     *          no nome, usando o método contains() da classe String. 
      *          Se não tiver um sobrenome, deve ser lançada
-     *          uma exceção informando isto.
-     *
+     *          uma exceção informando isto. 
+     * 
      *          (R04)
      *      </li>
      * </ul>
@@ -75,15 +74,13 @@ public class Cliente implements Cadastro {
     }
 
     public void setCpf(String cpf) {
-        if (cpf.isEmpty()) {
-            throw new IllegalArgumentException("CPF não pode estar vazio");
-        }
+        Objects.requireNonNull(cpf, "cpf nao pode ser nulo");
 
         char primeiro = cpf.charAt(0);
         boolean saoIguais = cpf.chars().allMatch(c -> c == primeiro);
 
         if (saoIguais)
-            throw new IllegalArgumentException("Digitos não podem ser iguais");
+                throw new IllegalArgumentException("Digitos não podem ser iguais");
 
         this.cpf = cpf;
     }
@@ -126,14 +123,14 @@ public class Cliente implements Cadastro {
         final String d1 = Util.calculaDigitoModulo11(cpf, 9);
         final String d2 = Util.calculaDigitoModulo11(cpf, 10);
 
-        /* Converte os dígitos calculados de int para String e une (concatena)
+        /* Converte os dígitos calculados de int para String e une (concatena) 
         os dois numa só String.*/
         final String digVerificadorCalculado = d1 + d2;
 
         // Copia os 2 últimos dígitos do CPF informado, pra comparar com os dígitos calculados
         final String digVerificadorExistente = cpf.substring(cpf.length() - 2);
 
-        /* Compara os 2 últimos dígitos do CPF com os 2 calculados.
+        /* Compara os 2 últimos dígitos do CPF com os 2 calculados. 
            Se forem iguais, o CPF é válido. */
         return digVerificadorExistente.equals(digVerificadorCalculado);
     }
