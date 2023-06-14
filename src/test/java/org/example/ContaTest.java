@@ -17,10 +17,38 @@ class ContaTest {
     @Test
     void contaCriadaComoContaCorrenteR02() {
         boolean esperado = true;
-        Conta conta = new Conta();
         boolean obtido = conta.isContaCorrente();
 
         assertEquals(esperado, obtido, "A conta deve ser instanciada como conta corrente");
 
     }
+
+    @Test
+    void getSaldoTotalAlto(){
+        final double saldo = 1000, limite = 1000;
+        final double esperado = 2000;
+        conta.setSaldo(saldo);
+        conta.setLimite(limite);
+        final double obtido = conta.getSaldoTotal();
+        assertEquals(esperado, obtido);
+    }
+
+    @Test
+    void getSaldoTotalBaixo(){
+        final double saldo = 0.1, limite = 0.2;
+        final double esperado = 0.3;
+        conta.setSaldo(saldo);
+        conta.setLimite(limite);
+        final double obtido = conta.getSaldoTotal();
+        assertEquals(esperado, obtido, 0.0001);
+    }
+
+    @Test
+    void getNumeroConta(){
+        final String esperado = "999999";
+        conta.setNumero(esperado);
+        final String obtido = conta.getNumero();
+        assertEquals(esperado, obtido);
+    }
+
 }
