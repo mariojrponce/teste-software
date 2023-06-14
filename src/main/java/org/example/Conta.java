@@ -101,9 +101,9 @@ public class Conta implements Cadastro {
      * @return
      */
     public double getSaldoTotal() {
-        /* TODO: Você precisa implementar este método.
+        /* TODO: Você precisa implementar este método. 
         A linha abaixo deve ser substituída pelo seu código */
-        return 0.0;
+        return saldo + limite;
     }
 
     /**
@@ -164,7 +164,10 @@ public class Conta implements Cadastro {
     }
 
     public void setNumero(String numero) {
-        this.numero = numero;
+        if (numero.length() == 6){
+            this.numero = numero;
+        }
+
     }
 
     public boolean isPoupanca() {
@@ -197,5 +200,9 @@ public class Conta implements Cadastro {
 
     public void setLimite(double limite) {
         this.limite = limite;
+    }
+
+    public void setSaldo(double saldo) {
+        this.saldo = saldo;
     }
 }
